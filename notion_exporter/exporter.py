@@ -396,25 +396,32 @@ class NotionExporter:
             current_page_path = page_paths[parent_page_id] + " / " + page_meta["title"]
         else:
             current_page_path = page_meta["title"]
+        
         page_paths[page_meta["page_id"]] = current_page_path
+        current_page_path = current_page_path.replace('"', '\\"')
 
         front_matter = ""
         if self.extract_page_metadata:
             front_matter += "---\n"
-            front_matter += f"title: {page_meta['title']}\n"
+            title = page_meta['title'].replace('"', '\\"')
+            front_matter += f'title: "{title}"\n'
             # Add quotation marks to avoid issues with colons in page titles
             front_matter += f'path: "{current_page_path}"\n'
             front_matter += f"url: {page_meta['url']}\n"
             front_matter += f"created_by: {page_meta['created_by']}\n"
             front_matter += f"last_edited_by: {page_meta['last_edited_by']}\n"
             front_matter += f"last_edited_time: {page_meta['last_edited_time']}\n"
-            front_matter += "---\n\n"
+
 
         # Add properties of database entries as key-value pairs
         if "properties" in page_meta:
             for prop_name, prop in page_meta["properties"].items():
-                front_matter += f"{prop_name}: {prop}\n"
-            front_matter += "\n"
+                # Escape double quotes in the prop value
+                escaped_prop = prop.replace('"', '\\"')
+
+                front_matter += f'"{prop_name}": "{escaped_prop}"\n'
+        
+        front_matter += "---\n\n"            
         front_matter += f"# {page_meta['title']}"
 
         return front_matter

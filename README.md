@@ -13,6 +13,10 @@ parallel, which can significantly speed up the export process.
 pip install notion-exporter
 ```
 
+```sh
+pip install -e /srv/pkg
+```
+
 ## Usage
 
 To use this package, you will need a Notion API token. You can follow the steps outlined in the [Notion documentation](https://developers.notion.com/docs/create-a-notion-integration#create-your-integration-in-notion) 
