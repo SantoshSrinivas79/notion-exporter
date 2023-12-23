@@ -422,7 +422,7 @@ class NotionExporter:
                 front_matter += f'"{prop_name}": "{escaped_prop}"\n'
         
         front_matter += "---\n\n"            
-        front_matter += f"# {page_meta['title']}"
+        # front_matter += f"# {page_meta['title']}"
 
         return front_matter
 
